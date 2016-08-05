@@ -1,20 +1,21 @@
 $(()=>{
   $('table').on('click', '.delete', deleteMsg)
-  //$('table').on('click', '.edit', editMsg)
+  $('table').on('click', '.edit', editMsg)
   $('#addNew').click(openAddModal);
   $('#newMsg').submit(addMsg);
+  $('#editMsg').submit(updateMsg);
 
 });
 
 function openAddModal(){
   $('#msgName').val("");
   $('#msgContent').val("");
-
   $('#newMsgModal').modal();
 }
 
 function addMsg(event){
   event.preventDefault();
+
   let newMsg = {
     name: $('#newName').val(),
     content: $('#msgContent').val()
@@ -38,7 +39,6 @@ function addMsg(event){
      method: 'DElETE'
    })
     .done(() =>{
-      console.log('delete success')
       renderList();
     })
     .fail(err =>{
@@ -61,4 +61,41 @@ function renderList(){
 
      $('#msgList').empty().append($trs);
    })
+   .fail(err =>{
+     console.log("err:", err)
+   })
+
+}
+
+function editMsg(){
+  $('.editMsg').removeClass('editMsg')
+  $('#editname').val("");
+  $('#editMsgCont').val("");
+
+  let $editMsgId = $(this).closest('tr').data('id');
+  let $editMsg = $(this).closest('tr');
+  $editMsg.addClass('editMsg');
+  $('#editMsgModal').modal();
+
+}
+
+function updateMsg(event){
+  event.preventDefault();
+  let msgId = $('.editMsg').data('id');
+  let updateMsg = {
+    name: $('#editname').val(),
+    content: $('#editMsgCont').val()
+  }
+
+  $.ajax(`/msg/${msgId}`, {
+    method: 'PUT',
+    data: updateMsg
+  })
+   .done(() =>{
+     $('#closeModalEdit').click();
+     renderList();
+   })
+   .fail(err =>{
+     console.log('err:', err)
+   });
 }

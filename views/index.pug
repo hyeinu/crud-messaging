@@ -55,6 +55,24 @@ body
         button.delete.btn.btn-danger.fa.fa-trash.fa-lg
 
 
+#editMsgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel')
+  form#editMsg
+    .modal-dialog.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4.modal-title Edit Message
+        .modal-body
+          .form-group
+            label Name:
+              input#editname.form-control
+          .form-group
+            textarea#editMsgCont.form-control
+        .modal-footer
+          button#closeModalEdit.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Edit Message
+
 #newMsgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel')
   form#newMsg
     .modal-dialog.modal-lg(role='document')
@@ -66,7 +84,7 @@ body
         .modal-body
           .form-group
             label Name:
-              input#newName.form-control
+            input#newName.form-control
           .form-group
             textarea#msgContent.form-control
         .modal-footer

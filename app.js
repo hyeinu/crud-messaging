@@ -45,13 +45,14 @@ app.route('/msg')
 
 app.route('/msg/:id')
    .get((req, res) =>{
-     Msg.getOne(req.params.id, function(err, cat){
-      res.status(err ? 400: 200).send(err || msgs);
+     console.log('test');
+     Msg.getOne(req.params.id, function(err, msg){
+      res.status(err ? 400 : 200).send(err || msg);
      })
    })
    .put((req, res) =>{
      Msg.update(req.params.id, req.body, function(err, msgs){
-       res.status(err ? 400: 200).send(err || msgs);
+       res.status(err ? 400 : 200).send(err || msgs);
      })
    })
    .delete((req, res) =>{

@@ -36,35 +36,37 @@ exports.create = function(msgObj, cb){
       })
     });
 }
-/*
+
 exports.getOne = function(msgId, cb){
-  // if (err) return cb(err)
+  this.getAll(function(err, msgs){
+    if (err) return cb(err);
+  let msg = msgs.filter(msg => msg.id == msgId)[0]
+    cb(null || msg);
+  });
+}
+
+exports.update = function(msgId, msgbody, cb){
+
   this.getAll(function(err, msgs){ //reading and parsing
     if (err) return cb(err);
-    cats.map(cat => { //ask the TA's how .find works
-      if (msg.id === msgId){
-        cb(null, msg)
-      }
-    });
+    let msg = msgs.filter(msg => msg.id === msgId)[0]
+    if(!msg){
+      return cb({error: 'Message not found'});
+    }
+    let index = msgs.indexOf(msg);
+
+    for(let key in msg){
+      msg[key] = msgbody[key] || msg[key];
+    }
+
+    msgs[index] = msg;
+
+    fs.writeFile(dataFilePath, JSON.stringify(msgs), function(err){
+      cb(err);
+    })
   });
 }
 
-exports.update = function(catid, catbody, cb){
-
-  this.getAll(function(err, cats){ //reading and parsing
-    if (err) return cb(err);
-    catbody.id = catid;
-    cats.map((cat, index) => { //ask the TA's how .find works
-      if (cat.id === catid){
-        cats.splice(index, 1, catbody)
-        fs.writeFile(dataFilePath, JSON.stringify(cats), function(err){
-          cb(err);
-        })
-      }
-    });
-  });
-}
-*/
 exports.delete = function(msgId, cb){
   this.getAll(function(err, msgs){ //reading and parsing
     if (err) return cb(err);
