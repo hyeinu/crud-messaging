@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+  meta(charset="UTF-8")
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  meta(http-equiv="X-UA-Compatible", content="ie=edge")
+
+  block head
+  link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+  link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1", crossorigin="anonymous")
+  link(rel="stylesheet" href="style.css")
+  script(src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous")
+  script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+  script(src="main.js")
+  title Document
+body
+  .container
+    h1.text-center #{title}!
+    button.btn.btn-primary.center-block#addNew New Message
+
+
+  if msgs.length
+    table.table
+      col(width="50")
+      col(width="60")
+      col(width="750")
+      col(width="50")
+      col(width="50")
+      thead
+        tr
+          th Name
+          th Date
+          th Message
+          th Edit
+          th Delete
+      tbody#msgList
+        each msg in msgs
+         tr(data-id = msg.id)
+           td #{msg.name}
+           td= msg.time
+           td #{msg.content}
+           td
+            button.edit.btn.btn-success.fa.fa-pencil.fa-lg
+           td
+            button.delete.btn.btn-danger.fa.fa-trash.fa-lg
+
+  table.hidden
+    tr#template
+      td.name
+      td.time
+      td.content
+      td
+        button.edit.btn.btn-success.fa.fa-pencil.fa-lg
+      td
+        button.delete.btn.btn-danger.fa.fa-trash.fa-lg
+
+
+#newMsgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myLargeModalLabel')
+  form#newMsg
+    .modal-dialog.modal-lg(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4.modal-title Add New Message
+        .modal-body
+          .form-group
+            label Name:
+              input#newName.form-control
+          .form-group
+            textarea#msgContent.form-control
+        .modal-footer
+          button#closeModalAdd.btn.btn-default(type='button', data-dismiss='modal') Close
+          button.btn.btn-primary(type='submit') Add Message
